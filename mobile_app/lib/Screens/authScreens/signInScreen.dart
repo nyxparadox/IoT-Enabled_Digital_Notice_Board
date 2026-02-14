@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/Router/appRouter.dart';
+import 'package:mobile_app/Screens/authScreens/signUpScreen.dart';
+import 'package:mobile_app/Services/serviceLocater.dart';
 
 class Signinscreen extends StatefulWidget {
   const Signinscreen({super.key});
@@ -11,17 +14,23 @@ class _MyWidgetState extends State<Signinscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: const Text('NoticeDesk', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 57, 81, 94),
       ),
-      
+
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
           color: Colors.grey[200],
-          boxShadow: [BoxShadow(color: Colors.black, offset: const Offset(0, 3), spreadRadius: 3, blurRadius: 3)],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              offset: const Offset(0, 3),
+              spreadRadius: 3,
+              blurRadius: 3,
+            ),
+          ],
         ),
         child: SingleChildScrollView(
           child: Center(
@@ -35,7 +44,7 @@ class _MyWidgetState extends State<Signinscreen> {
                       borderRadius: BorderRadius.all(Radius.elliptical(50, 60)),
                       color: Colors.white,
                     ),
-                          
+
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
@@ -44,10 +53,14 @@ class _MyWidgetState extends State<Signinscreen> {
                             height: 120,
                             width: 120,
                             child: ClipOval(
-                              child: Image.asset("assets/images/NoticeDesk.png"),
+                              child: Image.asset(
+                                "assets/images/NoticeDesk.png",
+                              ),
                             ),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(25),
+                              ),
                               color: Colors.blueGrey,
                             ),
                           ),
@@ -62,7 +75,12 @@ class _MyWidgetState extends State<Signinscreen> {
                                   text: "Notice",
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: const Color.fromARGB(255, 6, 51, 129),
+                                    color: const Color.fromARGB(
+                                      255,
+                                      6,
+                                      51,
+                                      129,
+                                    ),
                                     fontWeight: FontWeight.w900,
                                   ),
                                 ),
@@ -70,14 +88,19 @@ class _MyWidgetState extends State<Signinscreen> {
                                   text: "Desk",
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: const Color.fromARGB(255, 190, 24, 12),
+                                    color: const Color.fromARGB(
+                                      255,
+                                      190,
+                                      24,
+                                      12,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           SizedBox(height: 30),
-                          
+
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Column(
@@ -90,22 +113,25 @@ class _MyWidgetState extends State<Signinscreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text("SignIn to continue", style: TextStyle(color: Colors.grey.shade800),),
+                                Text(
+                                  "SignIn to continue",
+                                  style: TextStyle(color: Colors.grey.shade800),
+                                ),
                               ],
                             ),
                           ),
-                  
-                          SizedBox(height: 15,),
-                          
+
+                          SizedBox(height: 15),
+
                           TextField(
                             decoration: InputDecoration(
                               labelText: "email",
                               icon: Icon(Icons.email_outlined),
                             ),
                           ),
-                  
-                          SizedBox(height: 8,),
-                          
+
+                          SizedBox(height: 8),
+
                           TextField(
                             decoration: InputDecoration(
                               labelText: "password",
@@ -113,7 +139,7 @@ class _MyWidgetState extends State<Signinscreen> {
                               suffixIcon: Icon(Icons.visibility_outlined),
                             ),
                           ),
-                          
+
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
@@ -121,9 +147,9 @@ class _MyWidgetState extends State<Signinscreen> {
                               style: TextStyle(color: Colors.blue),
                             ),
                           ),
-                  
-                          SizedBox(height: 40,),
-                          
+
+                          SizedBox(height: 40),
+
                           ElevatedButton(
                             onPressed: () {},
                             child: Text(
@@ -135,19 +161,38 @@ class _MyWidgetState extends State<Signinscreen> {
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 50, 83, 99),
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                50,
+                                83,
+                                99,
+                              ),
                               elevation: 4,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), 
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
-                  
-                          SizedBox(height: 5,),
-                  
-                          Text("Don't have an account? ", style: TextStyle(color: Colors.grey[700]),),
-                          Text('SignUp', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
-                          SizedBox(height: 21,)
-                          
-                          
+
+                          SizedBox(height: 5),
+
+                          Text(
+                            "Don't have an account? ",
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Signupscreen()));
+                            },
+                            child: Text(
+                              'SignUp',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 21),
                         ],
                       ),
                     ),
