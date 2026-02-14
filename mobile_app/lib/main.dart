@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/Screens/authScreens/signInScreen.dart';
+import 'package:mobile_app/Services/serviceLocater.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await setUpServiceLocater();
   runApp(const MyApp());
 }
 
