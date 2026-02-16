@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/Screens/homeScreen.dart';
 
 class Deviceregistrationscreen extends StatefulWidget {
   const Deviceregistrationscreen({super.key});
@@ -58,7 +59,9 @@ class _DeviceregistrationscreenState extends State<Deviceregistrationscreen> {
                     const SizedBox(height: 20,),
 
                     ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Homescreen()));
+                      },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
