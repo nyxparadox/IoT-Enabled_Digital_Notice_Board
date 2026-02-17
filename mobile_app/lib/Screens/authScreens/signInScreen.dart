@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/Router/appRouter.dart';
 import 'package:mobile_app/Screens/authScreens/signUpScreen.dart';
-import 'package:mobile_app/Services/serviceLocater.dart';
+
 
 class Signinscreen extends StatefulWidget {
   const Signinscreen({super.key});
