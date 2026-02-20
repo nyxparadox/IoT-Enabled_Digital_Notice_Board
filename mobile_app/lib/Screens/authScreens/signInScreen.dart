@@ -1,5 +1,15 @@
+import 'dart:developer';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobile_app/Router/appRouter.dart';
 import 'package:mobile_app/Screens/authScreens/signUpScreen.dart';
+import 'package:mobile_app/Screens/homeScreen.dart';
+import 'package:mobile_app/Services/serviceLocater.dart';
+import 'package:mobile_app/logic/cubit/auth_cubit.dart';
+import 'package:mobile_app/logic/cubit/auth_state.dart';
 
 
 class Signinscreen extends StatefulWidget {
@@ -10,6 +20,54 @@ class Signinscreen extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<Signinscreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _isloading = false;
+
+    // Email validation
+  bool _isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
+
+
+
+  Future<void> _handelSignIn()async{
+      setState(() {
+        _isloading=true;
+      });
+    try{
+      
+      await getIt<AuthCubit>().signIn(email: _emailController.text, password: _passwordController.text
+      );
+      
+      final authState = getIt<AuthCubit>().state;
+      if (authState.status == AuthStatus.authenticated && authState.user != null){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const Homescreen()));
+      }else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(authState.error ?? 'Login failed'), backgroundColor: Colors.red,),
+          );
+      }
+
+      setState(() {
+        _isloading = false;
+      });
+
+    }catch(e){
+      log("ERROR: $e");
+       ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
+        );
+
+      setState(() {
+        _isloading = false;
+      });
+    } 
+  } 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,16 +180,20 @@ class _MyWidgetState extends State<Signinscreen> {
 
                           SizedBox(height: 15),
 
-                          TextField(
+                          TextFormField(
+                            controller: _emailController,
                             decoration: InputDecoration(
                               labelText: "email",
                               icon: Icon(Icons.email_outlined),
-                            ),
+                              errorText:
+                                _emailController.text.isNotEmpty && !_isValidEmail((_emailController.text.trim())) ? " please enter valid email" : null, 
+                            ), onChanged: (value) => setState(() {}),                            
                           ),
 
                           SizedBox(height: 8),
 
                           TextField(
+                            controller: _passwordController,
                             decoration: InputDecoration(
                               labelText: "password",
                               icon: Icon(Icons.lock),
@@ -150,8 +212,9 @@ class _MyWidgetState extends State<Signinscreen> {
                           SizedBox(height: 40),
 
                           ElevatedButton(
-                            onPressed: () {},
-                            child: Text(
+                            onPressed: _isloading ? null: _handelSignIn,
+                            child: _isloading ? Center(child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(Colors.white),),)
+                            : Text(
                               "SignIn",
                               style: TextStyle(
                                 color: Colors.white,
@@ -180,7 +243,8 @@ class _MyWidgetState extends State<Signinscreen> {
                             style: TextStyle(color: Colors.grey[700]),
                           ),
                           InkWell(
-                            onTap: () {
+                            onTap: () 
+                             {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Signupscreen()));
                             },
                             child: Text(
