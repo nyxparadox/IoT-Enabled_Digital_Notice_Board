@@ -1,5 +1,4 @@
 import 'dart:async';
-// import 'dart:nativewrappers/_internal/vm/lib/math_patch.dart';
 
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +72,7 @@ class _SignupscreenState extends State<Signupscreen> {
         _isloading = false;
       });
 
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> EmailVerificationScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> EmailVerificationScreen()));
 
       
 
