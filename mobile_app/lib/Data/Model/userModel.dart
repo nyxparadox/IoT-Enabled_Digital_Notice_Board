@@ -59,7 +59,7 @@ class Usermodel {
       name: data["name"] ?? "",
       email: data["email"] ?? "" ,
       createdAt: data['createdAt'] ?? Timestamp.now(),
-      isActive: data['isActive'] ?? "" ,
+      isActive: data['isActive'] as bool? ?? false ,
 
     );
   }
