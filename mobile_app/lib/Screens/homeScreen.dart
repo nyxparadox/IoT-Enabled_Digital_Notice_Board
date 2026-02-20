@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/Router/appRouter.dart';
+// import 'package:mobile_app/Router/appRouter.dart';
 import 'package:mobile_app/Screens/aboutUsPage.dart';
+import 'package:mobile_app/Screens/authScreens/signInScreen.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
+import 'package:mobile_app/logic/cubit/auth_cubit.dart';
+// import 'package:mobile_app/Services/serviceLocater.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -75,6 +79,10 @@ class _HomescreenState extends State<Homescreen> {
             ListTile(
               leading: Icon(Icons.logout,size: 33,color:  const Color.fromARGB(255, 175, 23, 12)),
               title: Text("Log out", style: TextStyle(fontSize: 18, color: const Color.fromARGB(255, 175, 23, 12)),),
+              onTap: () async {
+              getIt<AuthCubit>().signOut();
+              Navigator.push(context, MaterialPageRoute(builder: (_)=> Signinscreen()));
+              }
             ),
           ],
         ),
