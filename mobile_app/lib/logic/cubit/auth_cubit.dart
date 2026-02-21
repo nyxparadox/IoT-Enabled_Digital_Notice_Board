@@ -47,25 +47,23 @@ class AuthCubit extends Cubit<AuthState> {
 
 
 
-  // Future<void> deviceIdDetails({
-  //   required String deviceId,
-  // }) async {
-  //   try {
-  //     emit(state.copyWith(status: AuthStatus.loading));
-  //     final user = await _authRepository.deviceIdDetails(
-  //       deviceId: deviceId,
-  //     );
-  //     emit(state.copyWith(
-  //       status: AuthStatus.authenticated,
-  //       user: user,
-  //     ));
-  //   } catch (e) {
-  //     emit(state.copyWith(
-  //       status: AuthStatus.error,
-  //       error: e.toString(),
-  //     ));
-  //   }
-  // }
+  Future<void> updateNoticeBoardId({
+    required String NoticeBoardId,
+  }) async {
+    try {
+      emit(state.copyWith(status: AuthStatus.loading));
+      final user = await _authRepository.updateNoticeBoardId(NoticeBoardId);
+      emit(state.copyWith(
+        status: AuthStatus.authenticated,
+        user: user,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: AuthStatus.error,
+        error: e.toString(),
+      ));
+    }
+  }
 
 
   
