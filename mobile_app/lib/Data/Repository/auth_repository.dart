@@ -59,6 +59,26 @@ class AuthRepository extends Baserepository {
   }
 
 
+
+  Future<Usermodel> updateNoticeBoardId(String noticeBoardId) async{
+    try{
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null){
+        throw Exception("user not logged in");
+      }
+      await firestore.collection('users').doc(currentUser.uid).update({"noticeBoardId":noticeBoardId});
+
+      final updatedDoc = await firestore.collection("users").doc(currentUser.uid).get();
+
+      return Usermodel.fromFirestore(updatedDoc);
+      
+    }catch(e){
+      log("ERROR: $e");
+      rethrow;
+    }
+  }
+
+
   
 
 
