@@ -1,10 +1,5 @@
 import 'dart:developer';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:mobile_app/Router/appRouter.dart';
 import 'package:mobile_app/Screens/authScreens/signUpScreen.dart';
 import 'package:mobile_app/Screens/homeScreen.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
