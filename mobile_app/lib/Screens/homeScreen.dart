@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:mobile_app/Screens/aboutUsPage.dart';
@@ -23,6 +25,7 @@ class _HomescreenState extends State<Homescreen> {
   ];
 
   String selectedCategory = "General";
+  String? selectedIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -227,56 +230,209 @@ class _HomescreenState extends State<Homescreen> {
 
                           Row(
                             children: [
-                              Container(
-                                height: 95,
-                                width: 95,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 236, 237, 238),
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
-                                ),
-                                child: Image.asset("assets/images/icons/advertising.png"),
+                              // InkWell(
+                              //   onDoubleTap: () {
+                              //     setState(() {
+                              //       selectedIcon = "anouncement";
+                              //     });
+                              //     log("button pressed");
+                              //     log("selectedIcon is seted as = $selectedIcon");
+                                  
+                              //   },
+                              //   child: Container(
+                              //     height: 95,
+                              //     width: 95,
+                              //     decoration: BoxDecoration(
+                              //       color: const Color.fromARGB(255, 236, 237, 238),
+                              //       borderRadius: BorderRadius.circular(15),
+                              //       boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                              //     ),
+                              //     child: Image.asset("assets/images/icons/advertising.png"),
+                                
+                              //   ),
+                              // ),
 
+
+
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedIcon == "anouncement"){
+                                      selectedIcon = null;
+                                    }else {
+                                      selectedIcon = "anouncement";
+                                    }
+                                  });
+                                  log("button pressed");
+                                  log("selectedIcon is seted as = $selectedIcon");
+                                  
+                                },
+                                child: AnimatedScale(
+                                  scale: selectedIcon=="anouncement" ? 1.08 : 1.0,
+                                  duration: Duration(milliseconds: 250),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeInOut,
+                                    padding: const EdgeInsets.all(12),
+                                    height: 95,
+                                    width: 95,
+                                    decoration: BoxDecoration(
+                                      color: selectedIcon=="anouncement" ? Colors.blue[200]: const Color.fromARGB(255, 236, 237, 238),
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: selectedIcon=="anouncement" ? [BoxShadow(color: const Color.fromARGB(255, 4, 10, 15).withOpacity(0.3),blurRadius: 1,spreadRadius: 1,offset: Offset(3, 2), )] : [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                                    ),
+                                    child: Image.asset("assets/images/icons/advertising.png"),
+                                    
+                                    ),
+                                ),
                               ),
 
                               SizedBox(width: 12),
 
-                              Container(
-                                height: 95,
-                                width: 95,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 236, 237, 238),
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                              // Container(
+                              //   height: 95,
+                              //   width: 95,
+                              //   decoration: BoxDecoration(
+                              //     color: const Color.fromARGB(255, 236, 237, 238),
+                              //     borderRadius: BorderRadius.circular(15),
+                              //     boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                              //   ),
+                              //   child: Image.asset("assets/images/icons/calendar.png"),
+                              // ),
+
+
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedIcon == "calender"){
+                                      selectedIcon = null;
+                                    }else {
+                                      selectedIcon = "calender";
+                                    }
+                                  });
+                                  log("button pressed");
+                                  log("selectedIcon is seted as = $selectedIcon");
+                                  
+                                },
+                                borderRadius: BorderRadius.circular(15),
+                                child: AnimatedScale(
+                                  scale: selectedIcon=="calender" ? 1.08 : 1.0,
+                                  duration: Duration(milliseconds: 250),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeInOut,
+                                    padding: const EdgeInsets.all(12),
+                                    height: 95,
+                                    width: 95,
+                                    decoration: BoxDecoration(
+                                      color: selectedIcon=="calender" ? Colors.blue[200]: const Color.fromARGB(255, 236, 237, 238),
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: selectedIcon=="calender" ? [BoxShadow(color: const Color.fromARGB(255, 4, 10, 15).withOpacity(0.3),blurRadius: 1,spreadRadius: 1,offset: Offset(3, 2), )] : [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                                    ),
+                                    child: Image.asset("assets/images/icons/calendar.png"),
+                                    
+                                    ),
                                 ),
-                                child: Image.asset("assets/images/icons/calendar.png"),
                               ),
 
                               SizedBox(width: 13),
 
-                              Container(
-                                height: 95,
-                                width: 95,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 236, 237, 238),
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                              // Container(
+                              //   height: 95,
+                              //   width: 95,
+                              //   decoration: BoxDecoration(
+                              //     color: const Color.fromARGB(255, 236, 237, 238),
+                              //     borderRadius: BorderRadius.circular(15),
+                              //     boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                              //   ),
+                              //   child: Image.asset("assets/images/icons/exam.png"),
+                              // ),
+
+
+
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedIcon == "exam"){
+                                      selectedIcon = null;
+                                    }else {
+                                      selectedIcon = "exam";
+                                    }
+                                  });
+                                  log("button pressed");
+                                  log("selectedIcon is seted as = $selectedIcon");
+                                  
+                                },
+                                borderRadius: BorderRadius.circular(15),
+                                child: AnimatedScale(
+                                  scale: selectedIcon=="exam" ? 1.08 : 1.0,
+                                  duration: Duration(milliseconds: 250),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeInOut,
+                                    padding: const EdgeInsets.all(12),
+                                    height: 95,
+                                    width: 95,
+                                    decoration: BoxDecoration(
+                                      color: selectedIcon=="exam" ? Colors.blue[200]: const Color.fromARGB(255, 236, 237, 238),
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: selectedIcon=="exam" ? [BoxShadow(color: const Color.fromARGB(255, 4, 10, 15).withOpacity(0.3),blurRadius: 1,spreadRadius: 1,offset: Offset(3, 2), )] : [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                                    ),
+                                    child: Image.asset("assets/images/icons/exam.png"),
+                                    
+                                    ),
                                 ),
-                                child: Image.asset("assets/images/icons/exam.png"),
                               ),
 
                               SizedBox(width: 13),
 
-                              Container(
-                                height: 95,
-                                width: 95,
-                                decoration: BoxDecoration(
-                                  color:const Color.fromARGB(255, 236, 237, 238),
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                              // Container(
+                              //   height: 95,
+                              //   width: 95,
+                              //   decoration: BoxDecoration(
+                              //     color:const Color.fromARGB(255, 236, 237, 238),
+                              //     borderRadius: BorderRadius.circular(15),
+                              //     boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                              //   ),
+                              //   child: Image.asset("assets/images/icons/trophy.png"),
+                              // ),
+
+
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedIcon == "trophy"){
+                                      selectedIcon = null;
+                                    }else {
+                                      selectedIcon = "trophy";
+                                    }
+                                  });
+                                  log("button pressed");
+                                  log("selectedIcon is seted as = $selectedIcon");
+                                  
+                                },
+                                borderRadius: BorderRadius.circular(15),
+                                child: AnimatedScale(
+                                  scale: selectedIcon=="trophy" ? 1.08 : 1.0,
+                                  duration: Duration(milliseconds: 250),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeInOut,
+                                    padding: const EdgeInsets.all(12),
+                                    height: 95,
+                                    width: 95,
+                                    decoration: BoxDecoration(
+                                      color: selectedIcon=="trophy" ? Colors.blue[200]: const Color.fromARGB(255, 236, 237, 238),
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: selectedIcon=="trophy" ? [BoxShadow(color: const Color.fromARGB(255, 4, 10, 15).withOpacity(0.3),blurRadius: 1,spreadRadius: 1,offset: Offset(3, 2), )] : [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
+                                    ),
+                                    child: Image.asset("assets/images/icons/trophy.png"),
+                                    
+                                    ),
                                 ),
-                                child: Image.asset("assets/images/icons/trophy.png"),
                               ),
+
+
                             ],
                           ),
                         ],
