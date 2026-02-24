@@ -6,6 +6,7 @@ import 'package:mobile_app/Screens/aboutUsPage.dart';
 import 'package:mobile_app/Screens/authScreens/signInScreen.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
 import 'package:mobile_app/logic/cubit/auth_cubit.dart';
+import 'package:mobile_app/logic/cubit/notice_cubit.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -15,6 +16,8 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  final TextEditingController _messageController = TextEditingController();
+
   final List<String> categories = [
     "General",
     "Exam",
@@ -26,6 +29,38 @@ class _HomescreenState extends State<Homescreen> {
 
   String selectedCategory = "General";
   String? selectedIcon;
+  bool _isloading = false;
+
+  Future<void> _handelSendNotice()async{
+    setState(() {
+      _isloading = true;
+    });
+    try{
+      
+      await getIt<NoticeCubit>().createNotice(category: selectedCategory, message: _messageController.text, symbol: selectedIcon,);
+      await getIt<NoticeCubit>().updateNotice(category: selectedCategory, message: _messageController.text, symbol: selectedIcon,);
+
+      setState(() {
+        _isloading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NOTICE SUCCESSFULY UPLOADED", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), backgroundColor: Colors.green[900],), snackBarAnimationStyle: AnimationStyle(duration: Duration(milliseconds: 200), reverseDuration: Duration(milliseconds: 200)) );
+
+    }catch(e){
+      log("Error: $e");
+      setState(() {
+        _isloading = false;
+      });
+      rethrow;
+    }
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +240,7 @@ class _HomescreenState extends State<Homescreen> {
 
                           TextField(
                             maxLines: 3,
-                            
+                            controller: _messageController,
                             decoration: InputDecoration(
                               
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(15,)),
@@ -230,30 +265,6 @@ class _HomescreenState extends State<Homescreen> {
 
                           Row(
                             children: [
-                              // InkWell(
-                              //   onDoubleTap: () {
-                              //     setState(() {
-                              //       selectedIcon = "anouncement";
-                              //     });
-                              //     log("button pressed");
-                              //     log("selectedIcon is seted as = $selectedIcon");
-                                  
-                              //   },
-                              //   child: Container(
-                              //     height: 95,
-                              //     width: 95,
-                              //     decoration: BoxDecoration(
-                              //       color: const Color.fromARGB(255, 236, 237, 238),
-                              //       borderRadius: BorderRadius.circular(15),
-                              //       boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
-                              //     ),
-                              //     child: Image.asset("assets/images/icons/advertising.png"),
-                                
-                              //   ),
-                              // ),
-
-
-
                               InkWell(
                                 onTap: () {
                                   setState(() {
@@ -288,17 +299,6 @@ class _HomescreenState extends State<Homescreen> {
                               ),
 
                               SizedBox(width: 12),
-
-                              // Container(
-                              //   height: 95,
-                              //   width: 95,
-                              //   decoration: BoxDecoration(
-                              //     color: const Color.fromARGB(255, 236, 237, 238),
-                              //     borderRadius: BorderRadius.circular(15),
-                              //     boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
-                              //   ),
-                              //   child: Image.asset("assets/images/icons/calendar.png"),
-                              // ),
 
 
                               InkWell(
@@ -337,18 +337,6 @@ class _HomescreenState extends State<Homescreen> {
 
                               SizedBox(width: 13),
 
-                              // Container(
-                              //   height: 95,
-                              //   width: 95,
-                              //   decoration: BoxDecoration(
-                              //     color: const Color.fromARGB(255, 236, 237, 238),
-                              //     borderRadius: BorderRadius.circular(15),
-                              //     boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
-                              //   ),
-                              //   child: Image.asset("assets/images/icons/exam.png"),
-                              // ),
-
-
 
                               InkWell(
                                 onTap: () {
@@ -385,17 +373,6 @@ class _HomescreenState extends State<Homescreen> {
                               ),
 
                               SizedBox(width: 13),
-
-                              // Container(
-                              //   height: 95,
-                              //   width: 95,
-                              //   decoration: BoxDecoration(
-                              //     color:const Color.fromARGB(255, 236, 237, 238),
-                              //     borderRadius: BorderRadius.circular(15),
-                              //     boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), offset: Offset(3, 2), )],
-                              //   ),
-                              //   child: Image.asset("assets/images/icons/trophy.png"),
-                              // ),
 
 
                               InkWell(
@@ -443,9 +420,10 @@ class _HomescreenState extends State<Homescreen> {
                   SizedBox(height: 35),
 
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _isloading ? null: _handelSendNotice,
+                    child: _isloading ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.white), strokeWidth: 2,),)
 
-                    child: Padding(
+                    : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "SEND NOTICE",
