@@ -106,14 +106,29 @@ class _HomescreenState extends State<Homescreen> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(color:const Color.fromARGB(255, 50, 83, 99)),
-              child: Text(
-                'Er. Rohit Singh',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset("assets/images/collage_logo.png"),
+                  ),
+                  SizedBox(width: 12,),
+                  Column(
+                    children: [
+                      Padding(padding: EdgeInsets.only(top: 47)),
+                      Text("ABVGIET, SHIMLA (H.P.)", style: TextStyle(color: Colors.white, fontSize: 13),),
+                      Text("director.abv@gmail.com", style: TextStyle(color: Colors.white, fontSize: 13),),
+                    ],
+                  ),
+                  // Text("NoticeDesk", style: TextStyle(color: Colors.white, fontSize: 13),),
+                  
+                ],
+              )
             ),
 
             ListTile(
