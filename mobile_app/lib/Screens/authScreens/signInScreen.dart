@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mobile_app/Screens/authScreens/reset_password_dialog.dart';
 import 'package:mobile_app/Screens/authScreens/signUpScreen.dart';
 import 'package:mobile_app/Screens/homeScreen.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
@@ -198,10 +199,10 @@ class _MyWidgetState extends State<Signinscreen> {
 
                           Align(
                             alignment: Alignment.centerRight,
-                            child: Text(
-                              "Forgot Password",
-                              style: TextStyle(color: Colors.blue),
-                            ),
+                            child: TextButton(onPressed: (){
+                              showDialog(context: context, builder: (_)=> const ResetPasswordDialog());
+                            }, child: Text("Forgot Password", style: TextStyle(color: Colors.blue),))
+                            
                           ),
 
                           SizedBox(height: 40),
