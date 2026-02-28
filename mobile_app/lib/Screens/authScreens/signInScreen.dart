@@ -18,6 +18,7 @@ class Signinscreen extends StatefulWidget {
 class _MyWidgetState extends State<Signinscreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = true;
 
   bool _isloading = false;
 
@@ -190,10 +191,16 @@ class _MyWidgetState extends State<Signinscreen> {
 
                           TextField(
                             controller: _passwordController,
+                            obscureText: _isPasswordVisible,
                             decoration: InputDecoration(
                               labelText: "password",
                               icon: Icon(Icons.lock),
-                              suffixIcon: Icon(Icons.visibility_outlined),
+                              // suffixIcon: Icon(Icons.visibility_outlined),
+                              suffixIcon: IconButton(onPressed: (){
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              }, icon: Icon( _isPasswordVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined))
                             ),
                           ),
 
