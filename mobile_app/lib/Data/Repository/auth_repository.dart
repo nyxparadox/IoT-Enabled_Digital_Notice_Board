@@ -124,4 +124,14 @@ class AuthRepository extends Baserepository {
   }
 
 
+  Future<void> sendPasswordResetEmail(String email) async {
+  try {
+    await auth.sendPasswordResetEmail(email: email);
+  } catch (e) {
+    log("ERROR: $e");
+    rethrow;
+  }
+}
+
+
 }
