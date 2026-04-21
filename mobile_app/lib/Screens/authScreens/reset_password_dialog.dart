@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
 import 'package:mobile_app/logic/cubit/auth_cubit.dart';
 

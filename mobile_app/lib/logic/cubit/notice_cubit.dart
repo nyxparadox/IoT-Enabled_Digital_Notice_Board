@@ -13,7 +13,7 @@ class NoticeCubit extends Cubit<NoticeState> {
       : _noticeRepository = noticeRepository,
         super(const NoticeState());
 
-  /// 🔹 Create Notice
+  // Create Notice
   Future<void> createNotice({
     required String category,
     required String message,
@@ -74,27 +74,4 @@ class NoticeCubit extends Cubit<NoticeState> {
     }
   }
 
-
-
-
-
-
-
-
-  /// 🔹 Reset Notice
-  Future<void> resetNotice(String noticeBoardId) async {
-    try {
-      emit(state.copyWith(status: NoticeSatus.loading));
-
-      await _noticeRepository.resetNotice(noticeBoardId);
-
-      emit(state.copyWith(status: NoticeSatus.success));
-    } catch (e) {
-      log("Reset Error: $e");
-      emit(state.copyWith(
-        status: NoticeSatus.error,
-        error: e.toString(),
-      ));
-    }
-  }
 }
