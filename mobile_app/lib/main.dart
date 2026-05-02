@@ -1,14 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_app/Data/Repository/settings_repository.dart';
+import 'package:mobile_app/Router/appRouter.dart';
 import 'package:mobile_app/Screens/authScreens/signInScreen.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
 import 'package:mobile_app/firebase_options.dart';
+import 'package:mobile_app/logic/cubit/settings_cubit.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setUpServiceLocater();
   runApp(const MyApp());
 }
@@ -18,17 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      
-      home: const MyHomePage(title: 'NoticeDesk'),
-    );  
+    return MaterialApp(home: const MyHomePage(title: 'NoticeDesk'));
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-
 
   final String title;
 
@@ -37,13 +34,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-   
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const Signinscreen(),
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (_) => SettingsCubit(settingsRepository: getIt<SettingsRepository>()))],
+      child: MaterialApp(
+        title: "NoticeDesk",
+        navigatorKey: getIt<AppRouter>().navigatorKey,
+        home: const Signinscreen(),
+      ),
+      
     );
-    
   }
 }

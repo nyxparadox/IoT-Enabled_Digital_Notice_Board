@@ -1,9 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import 'package:mobile_app/Screens/aboutUsPage.dart';
 import 'package:mobile_app/Screens/authScreens/signInScreen.dart';
+import 'package:mobile_app/Screens/settings_screen.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
 import 'package:mobile_app/logic/cubit/auth_cubit.dart';
 import 'package:mobile_app/logic/cubit/notice_cubit.dart';
@@ -134,6 +133,7 @@ class _HomescreenState extends State<Homescreen> {
             ListTile(
               leading: Icon(Icons.settings,size: 33,),
               title: Text("Setting", style: TextStyle(fontSize: 18),),
+              onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));},
             ),
 
             ListTile(

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/Data/Repository/auth_repository.dart';
 import 'package:mobile_app/Data/Repository/notice_repository.dart';
+import 'package:mobile_app/Data/Repository/settings_repository.dart';
 import 'package:mobile_app/Router/appRouter.dart';
 import 'package:mobile_app/logic/cubit/auth_cubit.dart';
 import 'package:mobile_app/logic/cubit/notice_cubit.dart';
@@ -13,6 +14,7 @@ Future<void> setUpServiceLocater() async{
   getIt.registerLazySingleton(() => AppRouter());
   getIt.registerLazySingleton<FirebaseFirestore>(()=> FirebaseFirestore.instance);
   getIt.registerLazySingleton<FirebaseAuth>(()=> FirebaseAuth.instance);
+  getIt.registerLazySingleton<SettingsRepository>(()=> SettingsRepository());
   getIt.registerLazySingleton(() => AuthRepository());
   getIt.registerLazySingleton(() => NoticeRepository());
   getIt.registerLazySingleton(()=> AuthCubit(authRepository: AuthRepository()));
