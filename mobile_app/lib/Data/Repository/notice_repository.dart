@@ -39,11 +39,10 @@ class NoticeRepository extends Baserepository {
           .replaceAll(".", "_")
           .replaceAll( "/", "_");
           
-      await rtdb.child("noticeBoard").child(boardId).set({
+      await rtdb.child("noticeBoard").child(boardId).child("Notice").set({
         "category": category,
         "message": message,
         "symbol": symbol,
-        "noticeBoardId": boardId, // optional
       });
       
       return notice.copyWith(nid: docRef.id);
@@ -89,11 +88,10 @@ class NoticeRepository extends Baserepository {
           .replaceAll("/", "_");
 
 
-      await rtdb.child("noticeBoard").child(boardId).set({
+      await rtdb.child("noticeBoard").child(boardId).child("Notice").set({
         "category": category,
         "message": message,
         "symbol": symbol,
-        "noticeBoardId": boardId, // optional
       });
 
       final updatedNoticeDoc = await firestore
