@@ -18,15 +18,15 @@ class _HomescreenState extends State<Homescreen> {
   final TextEditingController _messageController = TextEditingController();
 
   final List<String> categories = [
-    "General",
-    "Exam",
-    "Academic",
-    "Event",
-    "Holiday",
-    "Emergency",
+    "NOTICE",
+    "EXAM",
+    "ACADEMIC",
+    "EVENT",
+    "HOLIDAY",
+    "EMERGENCY",
   ];
 
-  String selectedCategory = "General";
+  String selectedCategory = "NOTICE";
   String? selectedIcon;
   bool _isloading = false;
 
@@ -50,7 +50,7 @@ class _HomescreenState extends State<Homescreen> {
 
       setState(() {
         _isloading = false;
-        selectedCategory = "General";    // reset to deafault state
+        selectedCategory = "NOTICE";    // reset to deafault state
         _messageController.clear();      // reset message field by clearing message after success
         selectedIcon = null;             // if icon is selected than it will sated as unselected after uploading message
       });
@@ -132,7 +132,7 @@ class _HomescreenState extends State<Homescreen> {
 
             ListTile(
               leading: Icon(Icons.settings,size: 33,),
-              title: Text("Setting", style: TextStyle(fontSize: 18),),
+              title: Text("Settings", style: TextStyle(fontSize: 18),),
               onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));},
             ),
 
