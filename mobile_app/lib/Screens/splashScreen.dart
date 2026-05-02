@@ -20,25 +20,23 @@ class _SplashscreenState extends State<Splashscreen> {
 
     getIt<AuthCubit>().checkAuthenticationStatus();
   }
+  
+
   @override
-  Widget build(BuildContext context){
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) {
-        switch (state.status){
-          case AuthStatus.loading:
-          case AuthStatus.initial:
-           return _buildSplashScreen();
-
-          case AuthStatus.authenticated:
-            return const Homescreen();
-
-          case AuthStatus.unauthenticated:
-          case AuthStatus.error:
-            return const Signinscreen();
+  Widget build(BuildContext context) {
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state.status == AuthStatus.authenticated) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Homescreen()));
+        } else if (state.status == AuthStatus.unauthenticated || state.status == AuthStatus.error) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Signinscreen()));
         }
-      }
+      },
+      child: _buildSplashScreen(),
     );
   }
+
+
   Widget _buildSplashScreen() {
     return Scaffold(
       body: Container(
