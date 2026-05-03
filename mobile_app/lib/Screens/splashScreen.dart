@@ -15,24 +15,34 @@ class Splashscreen extends StatefulWidget {
 
 class _SplashscreenState extends State<Splashscreen> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
-    getIt<AuthCubit>().checkAuthenticationStatus();
+    context.read<AuthCubit>().checkAuthenticationStatus();
   }
-  
+
+
+
+
+
 
   @override
-  Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state.status == AuthStatus.authenticated) {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Homescreen()));
-        } else if (state.status == AuthStatus.unauthenticated || state.status == AuthStatus.error) {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Signinscreen()));
+  Widget build(BuildContext context){
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        switch (state.status){
+          case AuthStatus.loading:
+          case AuthStatus.initial:
+           return _buildSplashScreen();
+
+          case AuthStatus.authenticated:
+            return const Homescreen();
+
+          case AuthStatus.unauthenticated:
+          case AuthStatus.error:
+            return const Signinscreen();
         }
-      },
-      child: _buildSplashScreen(),
+      }
     );
   }
 
@@ -69,36 +79,68 @@ class _SplashscreenState extends State<Splashscreen> {
                   ),
                 ],
               ),
-              child: Image.asset("assets/images/NoticeDesk.png",
-              errorBuilder: (context, error, StackTrace){
-                return const Icon(
-                  Icons.home_outlined,
-                  size: 60,
-                  color: Color.fromARGB(255, 16, 56, 141),
-                );
-              },
+              child: Image.asset(
+                "assets/images/NoticeDesk.png",
+                errorBuilder: (context, error, StackTrace) {
+                  return const Icon(
+                    Icons.home_outlined,
+                    size: 60,
+                    color: Color.fromARGB(255, 16, 56, 141),
+                  );
+                },
               ),
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 30),
 
-            const Text.rich(TextSpan(children: [TextSpan(text: "Notice",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32)), TextSpan(text: "Desk", style: TextStyle(color: Color.fromARGB(255, 172, 2, 2), fontSize: 32, fontWeight: FontWeight.bold),)])),
-
-            const SizedBox(height: 10,),
-
-            Text("From phone to board--> in seconds", style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 16),
-            textAlign: TextAlign.center,
+            const Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Notice",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "Desk",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 172, 2, 2),
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
 
-            const SizedBox(height: 50,),
+            const SizedBox(height: 10),
+
+            Text(
+              "From phone to board--> in seconds",
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.9),
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+
+            const SizedBox(height: 50),
 
             const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               strokeWidth: 3,
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 20),
 
-            Text('Loading...', style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 16),),
-           
+            Text(
+              'Loading...',
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.8),
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),
