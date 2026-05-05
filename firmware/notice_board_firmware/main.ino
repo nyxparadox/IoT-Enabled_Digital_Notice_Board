@@ -82,6 +82,8 @@ String displayMode = "scroll";
 
 int scrollX = PANEL_RES_X;
 
+bool cmdResetDisplay = false;                       // added 
+bool cmdRestartDevice = false; 
 // COLOR HELPER
 // ==========================
 uint16_t getColor(String c)
@@ -216,6 +218,54 @@ void loop()
       if (json.get(res, "displayMode"))
         displayMode = res.stringValue;
     }
+
+    //          COMMAND FETCH
+    //=====================================
+    if (Firebase.RTDB.getJSON(&fbdo, "/noticeBoard/ESP32_02_11_004/Settings/commands")) {       // this condition to check command data
+
+      FirebaseJson &json = fbdo.jsonObject();
+      FirebaseJsonData res;
+
+      if (json.get(res, "resetDisplay")) cmdResetDisplay = res.boolValue;
+      if (json.get(res, "restartDevice")) cmdRestartDevice = res.boolValue;
+    }
+  }
+
+
+  // ----------- RESET DISPLAY ------------
+  if (cmdResetDisplay) {
+
+    FirebaseJson json;
+    json.set("message", "");
+    json.set("category", "");
+    json.set("symbol", "");
+    // json.set("isActive", false);
+
+    Firebase.RTDB.updateNode(
+      &fbdo,
+      "/noticeBoard/ESP32_02_11_004/Notice",
+      &json
+    );
+
+    Firebase.RTDB.setBool(
+      &fbdo,
+      "/noticeBoard/ESP32_02_11_004/Settings/commands/resetDisplay",
+      false
+    );
+  }
+
+
+  //  ---------RESET DEVICE---------
+
+  if (cmdRestartDevice) {
+
+    Serial.println("Restart command received");    //------------this will be removed for batter stoarage  (ALL SERIAL Println)
+
+    // Reset flag BEFORE restart
+    Firebase.RTDB.setBool(&fbdo, "/noticeBoard/ESP32_02_11_004/Settings/commands/restartDevice", false);
+
+    delay(300);
+    ESP.restart();
   }
 
   // DISPLAY
