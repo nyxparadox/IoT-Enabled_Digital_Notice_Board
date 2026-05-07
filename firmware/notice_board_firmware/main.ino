@@ -24,7 +24,7 @@
 
 
 
-
+#include <time.h>
 #include <WiFi.h>
 #include <Firebase_ESP_Client.h>
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
@@ -134,6 +134,51 @@ void drawBorder()
   }
 }
 
+//  CLOCK SCREEN fUNCTION
+// =================================
+
+void showClockScreen(){
+
+  struct tm timeinfo;
+
+  if (!getLocalTime(&timeinfo)) {
+    dma_display->setCursor(5, 20);
+    dma_display->print("No Time");
+    return;
+  }
+
+  char timeStr[10];
+  char dateStr[20];
+
+  strftime(timeStr, sizeof(timeStr), "%H:%M", &timeinfo);
+  strftime(dateStr, sizeof(dateStr), "%d/%m/%Y", &timeinfo);
+
+
+  // Time
+  dma_display->setTextColor(
+    dma_display->color565(0, 255, 255)
+  );
+
+  dma_display->setTextSize(1);
+
+  int timeWidth = strlen(timeStr) * 6;
+  int centerX = (PANEL_RES_X - timeWidth) / 2;
+
+  dma_display->setCursor(centerX, 10);
+  dma_display->print(timeStr);
+
+  // Date
+  dma_display->setTextColor(
+    dma_display->color565(255, 255, 0)
+  );
+
+  int dateWidth = strlen(dateStr) * 6;
+  int dateCenter = (PANEL_RES_X - dateWidth) / 2;
+
+  dma_display->setCursor(dateCenter, 25);
+  dma_display->print(dateStr);
+}
+
 // SETUP
 // ==========================
 void setup()
@@ -160,6 +205,21 @@ void setup()
   }
 
   Serial.println("\nWiFi Connected");
+
+
+  // CONFIGURING NTP CLIENT FOR TIME SYNCHRONIZATION 
+  configTime(19800, 0, "pool.ntp.org");
+
+  // Wait for time sync
+  struct tm timeinfo;
+
+  while (!getLocalTime(&timeinfo)) {
+    Serial.println("Waiting for NTP time...");
+    delay(1000);
+  }
+  Serial.println("Time synced!");
+
+
 
   // Firebase
   config.api_key = API_KEY;
@@ -274,34 +334,38 @@ void loop()
 
   dma_display->setBrightness8(brightness);
 
-  // Border
-  drawBorder();
+  if (message.length()== 0){
+    showClockScreen();
+  } else 
+  {  
+    drawBorder();     // boarder
 
-  // Header
-  dma_display->setTextColor(getColor(headerTextColor));
-  int w = category.length() * 6;
-  int cx = (PANEL_RES_X - w) / 2;
-  dma_display->setCursor(cx, 5);
-  dma_display->print(category);
+    // Header
+    dma_display->setTextColor(getColor(headerTextColor));
+    int w = category.length() * 6;
+    int cx = (PANEL_RES_X - w) / 2;
+    dma_display->setCursor(cx, 5);
+    dma_display->print(category);
 
-  // Message
-  dma_display->setTextColor(getColor(bodyTextColor));
+    // Message
+    dma_display->setTextColor(getColor(bodyTextColor));
 
-  if (displayMode == "scroll")
-  {
-    dma_display->setCursor(scrollX, 22);
-    dma_display->print(message);
+    if (displayMode == "scroll")
+    {
+      dma_display->setCursor(scrollX, 22);
+      dma_display->print(message);
 
-    scrollX -= scrollSpeed;
+      scrollX -= scrollSpeed;
 
-    int len = message.length() * 6;
-    if (scrollX < -(len + 20))
-      scrollX = PANEL_RES_X;
-  }
-  else
-  {
-    dma_display->setCursor(2, 22);
-    dma_display->print(message);
+      int len = message.length() * 6;
+      if (scrollX < -(len + 20))
+        scrollX = PANEL_RES_X;
+    }
+    else
+    {
+      dma_display->setCursor(2, 22);
+      dma_display->print(message);
+    }
   }
 
   delay(30);
