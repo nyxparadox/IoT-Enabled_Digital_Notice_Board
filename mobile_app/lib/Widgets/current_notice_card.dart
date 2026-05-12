@@ -257,7 +257,7 @@ class CurrentNoticeCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         "Sending a new notice will replace the current notice.",
-                        style: TextStyle(color:Color.fromARGB(255, 22, 101, 165),),
+                        style: TextStyle(color:Color.fromARGB(255, 22, 101, 165), fontSize: 11),
                       ),
                     ),
                   ],
