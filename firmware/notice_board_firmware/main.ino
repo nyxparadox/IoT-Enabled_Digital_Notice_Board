@@ -71,6 +71,8 @@ MatrixPanel_I2S_DMA *dma_display = nullptr;
 String message = "Waiting...";
 String category = "NOTICE";
 
+unsigned long long expiryAt = 0;      // Stores expiry time in milliseconds epoch.
+
 String bodyTextColor = "blue";
 String headerTextColor = "red";
 String borderColor = "green";
@@ -179,6 +181,34 @@ void showClockScreen(){
   dma_display->print(dateStr);
 }
 
+
+void clearCurrentNotice()
+{ 
+  // CLEAR LOCAL VARIABLES
+  message = "";
+  category = "";
+  expiryAt = 0;
+
+  scrollX = PANEL_RES_X;
+  
+  // CLEAR RTDB NOTICE
+  FirebaseJson json;
+
+  json.set("message", "");
+  json.set("category", "");
+  json.set("symbol", "");
+  json.set("expiryAt", 0);
+
+  Firebase.RTDB.updateNode(
+    &fbdo,
+    "/noticeBoard/ESP32_02_11_004/Notice",
+    &json
+  );
+
+  Serial.println("Notice expired and cleared.");
+}
+
+
 // SETUP
 // ==========================
 void setup()
@@ -253,6 +283,17 @@ void loop()
         message = res.stringValue;
       if (json.get(res, "category"))
         category = res.stringValue;
+
+        // FETCH EXPIRY TIME
+      if (json.get(res, "expiryAt")) {
+        expiryAt = strtoull(
+        res.stringValue.c_str(),
+        NULL,
+        10
+        );
+      } else {
+        expiryAt = 0;
+      }
     }
 
     // SETTINGS FETCH
@@ -333,6 +374,25 @@ void loop()
   dma_display->clearScreen();
 
   dma_display->setBrightness8(brightness);
+
+  // NOTICE EXPIRY CHECK
+  if (expiryAt > 0)
+  {
+    struct tm timeinfo;
+    if (getLocalTime(&timeinfo))
+    {
+      time_t now;
+      time(&now);
+      unsigned long long currentMillis =
+          (unsigned long long) now * 1000ULL;
+
+      if (currentMillis >= expiryAt)
+      {
+        clearCurrentNotice();
+      }
+    }
+  }
+
 
   if (message.length()== 0){
     showClockScreen();
