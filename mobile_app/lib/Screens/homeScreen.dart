@@ -8,6 +8,7 @@ import 'package:mobile_app/Screens/authScreens/signInScreen.dart';
 import 'package:mobile_app/Screens/settings_screen.dart';
 import 'package:mobile_app/Services/serviceLocater.dart';
 import 'package:mobile_app/Widgets/current_notice_card.dart';
+import 'package:mobile_app/Widgets/notice_expiry_card.dart';
 import 'package:mobile_app/logic/cubit/auth_cubit.dart';
 import 'package:mobile_app/logic/cubit/notice_cubit.dart';
 
@@ -38,6 +39,11 @@ class _HomescreenState extends State<Homescreen> {
   Map<String, dynamic>? currentNoticeData;
 
   bool isCurrentNoticeLoading = true;
+
+  // Notice expire variable
+  bool enableExpiry = false;
+  DateTime? selectedExpiryDate;
+  TimeOfDay? selectedExpiryTime;
 
   // FUNCTION FOR LOAD CURRENT LIVE DISPLAYED NOTICE
 
@@ -88,8 +94,37 @@ class _HomescreenState extends State<Homescreen> {
     }
   }
 
+  // FUNCTION FOR PICKING NOTICE EXPIRING DATE AND TIME
 
-//  FUNCTION TO HANDEL SEND NOTICE MESSAGES 
+  Future<void> _pickExpiryDate() async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        selectedExpiryDate = pickedDate;
+      });
+    }
+  }
+
+  Future<void> _pickExpiryTime() async {
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        selectedExpiryTime = pickedTime;
+      });
+    }
+  }
+
+  //  FUNCTION TO HANDEL SEND NOTICE MESSAGES
   Future<void> _handelSendNotice() async {
     setState(() {
       _isloading = true;
@@ -118,11 +153,30 @@ class _HomescreenState extends State<Homescreen> {
         return;
       }
 
+      // CREATE EXPIRY/AUTO DELETE TIMESTAMP
+
+      Timestamp? expiryTimestamp;
+
+      if (enableExpiry &&
+          selectedExpiryDate != null &&
+          selectedExpiryTime != null) {
+        final expiryDateTime = DateTime(
+          selectedExpiryDate!.year,
+          selectedExpiryDate!.month,
+          selectedExpiryDate!.day,
+
+          selectedExpiryTime!.hour,
+          selectedExpiryTime!.minute,
+        );
+
+        expiryTimestamp = Timestamp.fromDate(expiryDateTime);
+      }
+
       await getIt<NoticeCubit>().sendNotice(
         category: selectedCategory,
         message: _messageController.text,
         symbol: selectedIcon,
-        expiryAt: null,  // this will be added later as when scheduled expire message 
+        expiryAt: expiryTimestamp,
       );
 
       setState(() {
@@ -132,6 +186,11 @@ class _HomescreenState extends State<Homescreen> {
             .clear(); // reset message field by clearing message after success
         selectedIcon =
             null; // if icon is selected than it will sated as unselected after uploading message
+
+        // RESET EXPIRY
+        enableExpiry = false;
+        selectedExpiryDate = null;
+        selectedExpiryTime = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -292,8 +351,6 @@ class _HomescreenState extends State<Homescreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-
-                  
                     // CURRENT LIVE NOTICE CARD
                     isCurrentNoticeLoading
                         ? const Center(child: CircularProgressIndicator())
@@ -312,7 +369,7 @@ class _HomescreenState extends State<Homescreen> {
                                   ).toString()
                                 : "--",
 
-                            // EXPIRY TIME           -- function will be added later 
+                            // EXPIRY TIME           -- function will be added later
                             expiryTime: currentNoticeData?['expiryAt'] != null
                                 ? DateTime.fromMillisecondsSinceEpoch(
                                     currentNoticeData!['expiryAt'],
@@ -731,6 +788,27 @@ class _HomescreenState extends State<Homescreen> {
                       ),
                     ),
 
+                    const SizedBox(height: 25),
+
+                    NoticeExpiryCard(
+                      enableExpiry: enableExpiry,
+                      expiryDate: selectedExpiryDate,
+                      expiryTime: selectedExpiryTime,
+
+                      onToggle: () {
+                        setState(() {
+                          enableExpiry = !enableExpiry;
+                          if (!enableExpiry) {
+                            selectedExpiryDate = null;
+                            selectedExpiryTime = null;
+                          }
+                        });
+                      },
+
+                      onSelectDate: _pickExpiryDate,
+                      onSelectTime: _pickExpiryTime,
+                    ),
+
                     SizedBox(height: 35),
 
                     ElevatedButton(
@@ -746,13 +824,26 @@ class _HomescreenState extends State<Homescreen> {
                             )
                           : Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "SEND NOTICE",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.send_rounded,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+
+                                  const SizedBox(width: 12),
+
+                                  const Text(
+                                    "SEND NOTICE",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
 
@@ -765,6 +856,7 @@ class _HomescreenState extends State<Homescreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 15,)
                   ],
                 ),
               ),
