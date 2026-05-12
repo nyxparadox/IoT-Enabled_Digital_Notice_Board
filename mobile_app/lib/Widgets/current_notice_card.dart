@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CurrentNoticeCard extends StatelessWidget {
   final String category;
@@ -35,6 +36,17 @@ class CurrentNoticeCard extends StatelessWidget {
     }
   }
 
+  // FORMAT DATE & TIME
+  String formatDateTime(String value) {
+    try {
+      final dateTime = DateTime.parse(value);
+
+      return DateFormat("dd MMM yyyy, hh:mm a").format(dateTime);
+    } catch (e) {
+      return value;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool noActiveNotice =
@@ -58,7 +70,10 @@ class CurrentNoticeCard extends StatelessWidget {
             /// HEADER
             Row(
               children: [
-                const CircleAvatar(radius: 6, backgroundColor: Color.fromARGB(255, 58, 128, 60),),
+                const CircleAvatar(
+                  radius: 6,
+                  backgroundColor: Color.fromARGB(255, 58, 128, 60),
+                ),
 
                 const SizedBox(width: 10),
 
@@ -104,19 +119,14 @@ class CurrentNoticeCard extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // WHEN THEIR IS NO ACTIVE MESSAGE OR CONTENT 
-            
+            // WHEN THEIR IS NO ACTIVE MESSAGE OR CONTENT
             if (noActiveNotice) ...[
               const SizedBox(height: 15),
 
               Center(
                 child: Column(
                   children: [
-                    Icon(
-                      Icons.dvr_outlined,
-                      size: 70,
-                      color: Colors.grey[400],
-                    ),
+                    Icon(Icons.dvr_outlined, size: 70, color: Colors.grey[400]),
 
                     const SizedBox(height: 15),
 
@@ -139,14 +149,11 @@ class CurrentNoticeCard extends StatelessWidget {
                 ),
               ),
             ]
-            
             // ACTIVE NOTICE UI
             else ...[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
-                
                   // ICON
                   Container(
                     height: 135,
@@ -178,7 +185,9 @@ class CurrentNoticeCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: const Color.fromARGB(255, 242, 247, 252),
-                            border: BoxBorder.all(color: Color.fromARGB(166, 22, 101, 165))
+                            border: BoxBorder.all(
+                              color: Color.fromARGB(166, 22, 101, 165),
+                            ),
                           ),
 
                           child: Text(
@@ -209,7 +218,7 @@ class CurrentNoticeCard extends StatelessWidget {
                             const SizedBox(width: 8),
 
                             Text(
-                              "Active since: $activeSince",
+                              "Active since: ${formatDateTime(activeSince)}",
                               style: TextStyle(color: Colors.grey[700]),
                             ),
                           ],
@@ -224,7 +233,9 @@ class CurrentNoticeCard extends StatelessWidget {
                             const SizedBox(width: 8),
 
                             Text(
-                              "Expires at: $expiryTime",
+                              expiryTime == "No expiry"
+                                  ? "No expiry set"
+                                  : "Expires at: ${formatDateTime(expiryTime)}",
                               style: TextStyle(color: Colors.grey[700]),
                             ),
                           ],
@@ -257,7 +268,10 @@ class CurrentNoticeCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         "Sending a new notice will replace the current notice.",
-                        style: TextStyle(color:Color.fromARGB(255, 22, 101, 165), fontSize: 11),
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 22, 101, 165),
+                          fontSize: 11,
+                        ),
                       ),
                     ),
                   ],
