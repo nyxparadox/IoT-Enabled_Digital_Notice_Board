@@ -261,34 +261,48 @@ class _HomescreenState extends State<Homescreen> {
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 50, 83, 99),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Image.asset(
+                          "assets/images/collage_logo.png",
+                          fit: BoxFit.contain,
+                        ),                    
+                      ),
                     ),
-                    child: Image.asset("assets/images/collage_logo.png"),
-                  ),
-                  SizedBox(width: 12),
-                  Column(
-                    children: [
-                      Padding(padding: EdgeInsets.only(top: 47)),
-                      Text(
-                        "ABVGIET, SHIMLA (H.P.)",
-                        style: TextStyle(color: Colors.white, fontSize: 13),
-                      ),
-                      Text(
-                        "director.abv@gmail.com",
-                        style: TextStyle(color: Colors.white, fontSize: 13),
-                      ),
-                    ],
-                  ),
-
-                  // Text("NoticeDesk", style: TextStyle(color: Colors.white, fontSize: 13),),
-                ],
+                    const SizedBox(width: 12),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Padding(padding: EdgeInsets.only(top: 47)),
+                        Text(
+                          "ABVGIET, SHIMLA (H.P.)",
+  
+                          style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 1,),
+                        Text(
+                          "director.abv@gmail.com",
+                          
+                          style: TextStyle(color: Colors.white.withOpacity(0.95), fontSize: 13),
+                        ),
+                      ],
+                    ),
+                
+                    // Text("NoticeDesk", style: TextStyle(color: Colors.white, fontSize: 13),),
+                  ],
+                ),
               ),
             ),
 
@@ -511,272 +525,277 @@ class _HomescreenState extends State<Homescreen> {
 
                             Row(
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (selectedIcon == "anouncement") {
-                                        selectedIcon = null;
-                                      } else {
-                                        selectedIcon = "anouncement";
-                                      }
-                                    });
-                                    log("button pressed");
-                                    log(
-                                      "selectedIcon is seted as = $selectedIcon",
-                                    );
-                                  },
-                                  child: AnimatedScale(
-                                    scale: selectedIcon == "anouncement"
-                                        ? 1.08
-                                        : 1.0,
-                                    duration: Duration(milliseconds: 250),
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 250,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      padding: const EdgeInsets.all(12),
-                                      height: 95,
-                                      width: 95,
-                                      decoration: BoxDecoration(
-                                        color: selectedIcon == "anouncement"
-                                            ? Colors.blue[200]
-                                            : const Color.fromARGB(
-                                                255,
-                                                236,
-                                                237,
-                                                238,
-                                              ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        boxShadow: selectedIcon == "anouncement"
-                                            ? [
-                                                BoxShadow(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    4,
-                                                    10,
-                                                    15,
-                                                  ).withOpacity(0.3),
-                                                  blurRadius: 1,
-                                                  spreadRadius: 1,
-                                                  offset: Offset(3, 2),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (selectedIcon == "anouncement") {
+                                          selectedIcon = null;
+                                        } else {
+                                          selectedIcon = "anouncement";
+                                        }
+                                      });
+                                      log("button pressed");
+                                      log(
+                                        "selectedIcon is seted as = $selectedIcon",
+                                      );
+                                    },
+                                    child: AnimatedScale(
+                                      scale: selectedIcon == "anouncement"
+                                          ? 1.08
+                                          : 1.0,
+                                      duration: Duration(milliseconds: 250),
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 250,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        padding: const EdgeInsets.all(12),
+                                        height: 85,
+                                        // width: 95,
+                                        decoration: BoxDecoration(
+                                          color: selectedIcon == "anouncement"
+                                              ? Colors.blue[200]
+                                              : const Color.fromARGB(
+                                                  255,
+                                                  236,
+                                                  237,
+                                                  238,
                                                 ),
-                                              ]
-                                            : [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.3),
-                                                  offset: Offset(3, 2),
-                                                ),
-                                              ],
-                                      ),
-                                      child: Image.asset(
-                                        "assets/images/icons/advertising.png",
+                                          borderRadius: BorderRadius.circular(15),
+                                          boxShadow: selectedIcon == "anouncement"
+                                              ? [
+                                                  BoxShadow(
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      4,
+                                                      10,
+                                                      15,
+                                                    ).withOpacity(0.3),
+                                                    blurRadius: 1,
+                                                    spreadRadius: 1,
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ]
+                                              : [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.3),
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ],
+                                        ),
+                                        child: Image.asset(
+                                          "assets/images/icons/advertising.png",
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
 
-                                SizedBox(width: 12),
+                                const SizedBox(width: 8),       // ----------changed
 
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (selectedIcon == "calender") {
-                                        selectedIcon = null;
-                                      } else {
-                                        selectedIcon = "calender";
-                                      }
-                                    });
-                                    log("button pressed");
-                                    log(
-                                      "selectedIcon is seted as = $selectedIcon",
-                                    );
-                                  },
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: AnimatedScale(
-                                    scale: selectedIcon == "calender"
-                                        ? 1.08
-                                        : 1.0,
-                                    duration: Duration(milliseconds: 250),
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 250,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      padding: const EdgeInsets.all(12),
-                                      height: 95,
-                                      width: 95,
-                                      decoration: BoxDecoration(
-                                        color: selectedIcon == "calender"
-                                            ? Colors.blue[200]
-                                            : const Color.fromARGB(
-                                                255,
-                                                236,
-                                                237,
-                                                238,
-                                              ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        boxShadow: selectedIcon == "calender"
-                                            ? [
-                                                BoxShadow(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    4,
-                                                    10,
-                                                    15,
-                                                  ).withOpacity(0.3),
-                                                  blurRadius: 1,
-                                                  spreadRadius: 1,
-                                                  offset: Offset(3, 2),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (selectedIcon == "calender") {
+                                          selectedIcon = null;
+                                        } else {
+                                          selectedIcon = "calender";
+                                        }
+                                      });
+                                      log("button pressed");
+                                      log(
+                                        "selectedIcon is seted as = $selectedIcon",
+                                      );
+                                    },
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: AnimatedScale(
+                                      scale: selectedIcon == "calender"
+                                          ? 1.08
+                                          : 1.0,
+                                      duration: Duration(milliseconds: 250),
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 250,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        padding: const EdgeInsets.all(12),
+                                        height: 85,
+                                        decoration: BoxDecoration(
+                                          color: selectedIcon == "calender"
+                                              ? Colors.blue[200]
+                                              : const Color.fromARGB(
+                                                  255,
+                                                  236,
+                                                  237,
+                                                  238,
                                                 ),
-                                              ]
-                                            : [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.3),
-                                                  offset: Offset(3, 2),
-                                                ),
-                                              ],
-                                      ),
-                                      child: Image.asset(
-                                        "assets/images/icons/calendar.png",
+                                          borderRadius: BorderRadius.circular(15),
+                                          boxShadow: selectedIcon == "calender"
+                                              ? [
+                                                  BoxShadow(
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      4,
+                                                      10,
+                                                      15,
+                                                    ).withOpacity(0.3),
+                                                    blurRadius: 1,
+                                                    spreadRadius: 1,
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ]
+                                              : [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.3),
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ],
+                                        ),
+                                        child: Image.asset(
+                                          "assets/images/icons/calendar.png",
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
 
-                                SizedBox(width: 13),
+                                const SizedBox(width: 8),
 
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (selectedIcon == "exam") {
-                                        selectedIcon = null;
-                                      } else {
-                                        selectedIcon = "exam";
-                                      }
-                                    });
-                                    log("button pressed");
-                                    log(
-                                      "selectedIcon is seted as = $selectedIcon",
-                                    );
-                                  },
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: AnimatedScale(
-                                    scale: selectedIcon == "exam" ? 1.08 : 1.0,
-                                    duration: Duration(milliseconds: 250),
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 250,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      padding: const EdgeInsets.all(12),
-                                      height: 95,
-                                      width: 95,
-                                      decoration: BoxDecoration(
-                                        color: selectedIcon == "exam"
-                                            ? Colors.blue[200]
-                                            : const Color.fromARGB(
-                                                255,
-                                                236,
-                                                237,
-                                                238,
-                                              ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        boxShadow: selectedIcon == "exam"
-                                            ? [
-                                                BoxShadow(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    4,
-                                                    10,
-                                                    15,
-                                                  ).withOpacity(0.3),
-                                                  blurRadius: 1,
-                                                  spreadRadius: 1,
-                                                  offset: Offset(3, 2),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (selectedIcon == "exam") {
+                                          selectedIcon = null;
+                                        } else {
+                                          selectedIcon = "exam";
+                                        }
+                                      });
+                                      log("button pressed");
+                                      log(
+                                        "selectedIcon is seted as = $selectedIcon",
+                                      );
+                                    },
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: AnimatedScale(
+                                      scale: selectedIcon == "exam" ? 1.08 : 1.0,
+                                      duration: Duration(milliseconds: 250),
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 250,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        padding: const EdgeInsets.all(12),
+                                        height: 85,
+                                        decoration: BoxDecoration(
+                                          color: selectedIcon == "exam"
+                                              ? Colors.blue[200]
+                                              : const Color.fromARGB(
+                                                  255,
+                                                  236,
+                                                  237,
+                                                  238,
                                                 ),
-                                              ]
-                                            : [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.3),
-                                                  offset: Offset(3, 2),
-                                                ),
-                                              ],
-                                      ),
-                                      child: Image.asset(
-                                        "assets/images/icons/exam.png",
+                                          borderRadius: BorderRadius.circular(15),
+                                          boxShadow: selectedIcon == "exam"
+                                              ? [
+                                                  BoxShadow(
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      4,
+                                                      10,
+                                                      15,
+                                                    ).withOpacity(0.3),
+                                                    blurRadius: 1,
+                                                    spreadRadius: 1,
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ]
+                                              : [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.3),
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ],
+                                        ),
+                                        child: Image.asset(
+                                          "assets/images/icons/exam.png",
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
 
-                                SizedBox(width: 13),
+                                const SizedBox(width: 8),
 
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (selectedIcon == "trophy") {
-                                        selectedIcon = null;
-                                      } else {
-                                        selectedIcon = "trophy";
-                                      }
-                                    });
-                                    log("button pressed");
-                                    log(
-                                      "selectedIcon is seted as = $selectedIcon",
-                                    );
-                                  },
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: AnimatedScale(
-                                    scale: selectedIcon == "trophy"
-                                        ? 1.08
-                                        : 1.0,
-                                    duration: Duration(milliseconds: 250),
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 250,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      padding: const EdgeInsets.all(12),
-                                      height: 95,
-                                      width: 95,
-                                      decoration: BoxDecoration(
-                                        color: selectedIcon == "trophy"
-                                            ? Colors.blue[200]
-                                            : const Color.fromARGB(
-                                                255,
-                                                236,
-                                                237,
-                                                238,
-                                              ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        boxShadow: selectedIcon == "trophy"
-                                            ? [
-                                                BoxShadow(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    4,
-                                                    10,
-                                                    15,
-                                                  ).withOpacity(0.3),
-                                                  blurRadius: 1,
-                                                  spreadRadius: 1,
-                                                  offset: Offset(3, 2),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (selectedIcon == "trophy") {
+                                          selectedIcon = null;
+                                        } else {
+                                          selectedIcon = "trophy";
+                                        }
+                                      });
+                                      log("button pressed");
+                                      log(
+                                        "selectedIcon is seted as = $selectedIcon",
+                                      );
+                                    },
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: AnimatedScale(
+                                      scale: selectedIcon == "trophy"
+                                          ? 1.08
+                                          : 1.0,
+                                      duration: Duration(milliseconds: 250),
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 250,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        padding: const EdgeInsets.all(12),
+                                        height: 85,
+                                        decoration: BoxDecoration(
+                                          color: selectedIcon == "trophy"
+                                              ? Colors.blue[200]
+                                              : const Color.fromARGB(
+                                                  255,
+                                                  236,
+                                                  237,
+                                                  238,
                                                 ),
-                                              ]
-                                            : [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.3),
-                                                  offset: Offset(3, 2),
-                                                ),
-                                              ],
-                                      ),
-                                      child: Image.asset(
-                                        "assets/images/icons/trophy.png",
+                                          borderRadius: BorderRadius.circular(15),
+                                          boxShadow: selectedIcon == "trophy"
+                                              ? [
+                                                  BoxShadow(
+                                                    color: const Color.fromARGB(
+                                                      255,
+                                                      4,
+                                                      10,
+                                                      15,
+                                                    ).withOpacity(0.3),
+                                                    blurRadius: 1,
+                                                    spreadRadius: 1,
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ]
+                                              : [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.3),
+                                                    offset: Offset(3, 2),
+                                                  ),
+                                                ],
+                                        ),
+                                        child: Image.asset(
+                                          "assets/images/icons/trophy.png",
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -786,7 +805,7 @@ class _HomescreenState extends State<Homescreen> {
                           ],
                         ),
                       ),
-                    ),
+                    ),                         // --------------------------end-------------------------
 
                     const SizedBox(height: 25),
 
@@ -824,26 +843,29 @@ class _HomescreenState extends State<Homescreen> {
                             )
                           : Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.send_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-
-                                  const SizedBox(width: 12),
-
-                                  const Text(
-                                    "SEND NOTICE",
-                                    style: TextStyle(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.send_rounded,
                                       color: Colors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
+                                      size: 30,
                                     ),
-                                  ),
-                                ],
+                                
+                                    const SizedBox(width: 12),
+                                
+                                    const Text(
+                                      "SEND NOTICE",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
 

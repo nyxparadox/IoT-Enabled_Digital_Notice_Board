@@ -74,41 +74,44 @@ class CurrentNoticeCard extends StatelessWidget {
                   radius: 6,
                   backgroundColor: Color.fromARGB(255, 58, 128, 60),
                 ),
-
+        
                 const SizedBox(width: 10),
-
-                const Text(
-                  "Currently Displaying",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        
+                Expanded(
+                  child: const Text(
+                    "Currently Displaying",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                 ),
-
+        
                 const SizedBox(width: 12),
-
+        
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 4,
                   ),
-
+        
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 221, 233, 222),
                     borderRadius: BorderRadius.circular(20),
                   ),
-
+        
                   child: Row(
                     children: [
                       const CircleAvatar(
                         radius: 4,
                         backgroundColor: Color.fromARGB(255, 58, 128, 60),
                       ),
-
+        
                       const SizedBox(width: 5),
-
+        
                       const Text(
                         "LIVE",
                         style: TextStyle(
                           color: Color.fromARGB(255, 60, 138, 63),
                           fontWeight: FontWeight.bold,
+                          fontSize: 13
                         ),
                       ),
                     ],
@@ -116,20 +119,20 @@ class CurrentNoticeCard extends StatelessWidget {
                 ),
               ],
             ),
-
+        
             const SizedBox(height: 20),
-
+        
             // WHEN THEIR IS NO ACTIVE MESSAGE OR CONTENT
             if (noActiveNotice) ...[
               const SizedBox(height: 15),
-
+        
               Center(
                 child: Column(
                   children: [
                     Icon(Icons.dvr_outlined, size: 70, color: Colors.grey[400]),
-
+        
                     const SizedBox(height: 15),
-
+        
                     const Text(
                       "No Active Notice",
                       style: TextStyle(
@@ -137,9 +140,9 @@ class CurrentNoticeCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
+        
                     const SizedBox(height: 10),
-
+        
                     Text(
                       "Board is showing default clock screen.",
                       style: TextStyle(color: Colors.grey[600], fontSize: 16),
@@ -156,21 +159,21 @@ class CurrentNoticeCard extends StatelessWidget {
                 children: [
                   // ICON
                   Container(
-                    height: 135,
-                    width: 90,
-
+                    height: 115,
+                    width: 100,
+        
                     padding: const EdgeInsets.all(10),
-
+        
                     decoration: BoxDecoration(
                       color: Colors.grey[100],
                       borderRadius: BorderRadius.circular(18),
                     ),
-
+        
                     child: Image.asset(getIconPath()),
                   ),
-
+        
                   const SizedBox(width: 18),
-
+        
                   // DETAILS
                   Expanded(
                     child: Column(
@@ -181,7 +184,7 @@ class CurrentNoticeCard extends StatelessWidget {
                             horizontal: 10,
                             vertical: 1,
                           ),
-
+        
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: const Color.fromARGB(255, 242, 247, 252),
@@ -189,7 +192,7 @@ class CurrentNoticeCard extends StatelessWidget {
                               color: Color.fromARGB(166, 22, 101, 165),
                             ),
                           ),
-
+        
                           child: Text(
                             category,
                             style: const TextStyle(
@@ -198,45 +201,56 @@ class CurrentNoticeCard extends StatelessWidget {
                             ),
                           ),
                         ),
-
+        
                         const SizedBox(height: 10),
-
+        
                         Text(
                           message,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
+        
                         const SizedBox(height: 14),
-
+        
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Icon(Icons.access_time, size: 18),
-
+        
                             const SizedBox(width: 8),
-
-                            Text(
-                              "Active since: ${formatDateTime(activeSince)}",
-                              style: TextStyle(color: Colors.grey[700]),
+        
+                            Expanded(
+                              child: Text(
+                                "Active since: ${formatDateTime(activeSince)}",
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(color: Colors.grey[700]),
+                              ),
                             ),
                           ],
                         ),
-
+        
                         const SizedBox(height: 8),
-
+        
                         Row(
                           children: [
                             const Icon(Icons.calendar_today, size: 18),
-
+                                
                             const SizedBox(width: 8),
-
-                            Text(
-                              expiryTime == "No expiry"
-                                  ? "No expiry set"
-                                  : "Expires at: ${formatDateTime(expiryTime)}",
-                              style: TextStyle(color: Colors.grey[700]),
+                                
+                            Expanded(
+                              child: Text(
+                                expiryTime == "No expiry"
+                                    ? "No expiry set"
+                                    : "Expires at: ${formatDateTime(expiryTime)}",
+                                    softWrap: true,
+                                    overflow: TextOverflow.visible,
+                                style: TextStyle(color: Colors.grey[700]),
+                              ),
                             ),
                           ],
                         ),
@@ -245,26 +259,26 @@ class CurrentNoticeCard extends StatelessWidget {
                   ),
                 ],
               ),
-
+        
               const SizedBox(height: 20),
-
+        
               // INFO BANNER
               Container(
                 width: double.infinity,
-
+        
                 padding: const EdgeInsets.all(3),
-
+        
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 235, 244, 250),
                   borderRadius: BorderRadius.circular(14),
                 ),
-
+        
                 child: Row(
                   children: [
                     Icon(Icons.info_outline, color: Colors.blue[700]),
-
+        
                     const SizedBox(width: 10),
-
+        
                     Expanded(
                       child: Text(
                         "Sending a new notice will replace the current notice.",
@@ -278,7 +292,7 @@ class CurrentNoticeCard extends StatelessWidget {
                 ),
               ),
             ],
-
+        
             const SizedBox(height: 5),
           ],
         ),
