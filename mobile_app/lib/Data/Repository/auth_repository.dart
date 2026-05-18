@@ -16,6 +16,7 @@ class AuthRepository extends Baserepository {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: email, password: password);
 
       await userCredential.user!.sendEmailVerification();
+      log("Verification Link has been sended to User email address for verifiaction");
 
       final user = Usermodel(
         uid: userCredential.user!.uid,
@@ -48,6 +49,7 @@ class AuthRepository extends Baserepository {
     }
 
     final userData = await getUserData(userCredential.user!.uid);
+    log("User Succesfully SignIn his account");
     return userData;
 
     }catch(e){
@@ -69,6 +71,7 @@ class AuthRepository extends Baserepository {
       await firestore.collection('users').doc(currentUser.uid).update({"noticeBoardId":noticeBoardId});
 
       final updatedDoc = await firestore.collection("users").doc(currentUser.uid).get();
+      log("Succesfully updated Notice in database");
 
       return Usermodel.fromFirestore(updatedDoc);
       
@@ -127,6 +130,7 @@ class AuthRepository extends Baserepository {
   Future<void> sendPasswordResetEmail(String email) async {
   try {
     await auth.sendPasswordResetEmail(email: email);
+    log("Succesfully send Password Reset link to the user registered email");
   } catch (e) {
     log("ERROR: $e");
     rethrow;

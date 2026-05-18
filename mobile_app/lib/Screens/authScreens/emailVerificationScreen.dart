@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,6 +30,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     try {
       final user = FirebaseAuth.instance.currentUser;
       await user?.sendEmailVerification();
+      log("email verifiaction link has been send to reigister user email");
       setState(() => _canResend = false);
 
       await Future.delayed(const Duration(seconds: 30));
@@ -45,6 +48,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       if (user != null && user.emailVerified) {
         timer.cancel();
         if (!mounted) return;
+        log("User Succesfully Varified !");
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
