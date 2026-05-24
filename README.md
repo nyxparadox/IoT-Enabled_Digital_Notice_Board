@@ -163,8 +163,8 @@ HUB75E RGB LED Matrix Display
         }
 
         "wifi": {
-          "ssid": wifi_name,
-          "password": wifi_password
+          "ssid": "wifi_name",
+          "password": "wifi_password"
         }
 
       }

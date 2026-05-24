@@ -352,8 +352,8 @@ Optimization techniques:
         }
 
         "wifi": {
-          "ssid": wifi_name,
-          "password": wifi_password
+          "ssid": "wifi_name",
+          "password": "wifi_password"
         }
 
       }
