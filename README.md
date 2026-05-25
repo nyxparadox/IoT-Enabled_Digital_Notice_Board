@@ -228,7 +228,7 @@ The report includes:
 
 
 <div align="center">
-<a href="./project_report/IoT-Enabled_Digital_Notice_Board_Report.pdf">
+<a href="./project_report/IoT_Enabled_Digital_Notice_Board_Report.pdf">
 <img
 height="35"
 src="https://img.shields.io/badge/View%20PROJECT%20Report-2563EB?style=for-the-badge&logo=github&logoColor=white"
