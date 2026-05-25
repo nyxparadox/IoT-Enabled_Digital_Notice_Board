@@ -211,6 +211,33 @@ After expiry, the system automatically switches to realtime clock mode.
 
 ---
 
+# 📄 Technical Project Report
+
+The complete technical documentation for the **IoT-Enabled Digital Notice Board** project is available in the detailed project report.
+
+The report includes:
+
+- System Architecture  
+- Hardware Design  
+- Software Implementation  
+- Firebase Integration  
+- ESP32 Firmware Logic  
+- Testing and Results  
+- Communication Workflow  
+- Future Scope and Analysis  
+
+
+<div align="center">
+<a href="./project_report/IoT-Enabled_Digital_Notice_Board_Report.pdf">
+<img
+height="35"
+src="https://img.shields.io/badge/View%20PROJECT%20Report-2563EB?style=for-the-badge&logo=github&logoColor=white"
+/>
+</a>
+</div> 
+
+---
+
 # ⚠️ Challenges Faced
 
 - HUB75E driver IC compatibility  
@@ -242,9 +269,29 @@ After expiry, the system automatically switches to realtime clock mode.
 
 ---
 
-# 👨‍💻 Authors
+# 👨‍💻 Lead Developer
 
-Developed as a **4th Semester Micro Project**  
+**Rohit Singh**
+
+- [GitHub Profile](https://github.com/nyxparadox)
+- [Portfolio](https://nyxparadox.github.io/rohit_singh-portfolio/)
+
+
+### Primary Responsibilities
+
+- Flutter Mobile Application Development  
+- Firebase Integration & Cloud Architecture  
+- ESP32 Firmware Development  
+- HUB75E Display Integration  
+- Realtime Synchronization Logic  
+- System Architecture Design  
+- Technical Documentation  
+
+---
+
+# 🤝 Academic Project Context
+
+Developed as part of a 4th Semester Micro Project  
 Department of Electronics and Communication Engineering  
 
 ---
